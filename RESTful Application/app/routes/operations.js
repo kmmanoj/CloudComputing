@@ -22,7 +22,7 @@ db.open(function(db_open_error, db){
 exports.createCategory = function(req, res){
 	// create a category and add atleast one book into the database 
 	// @input : 'category name' 
-	// method = GET?
+	// method = POST
 	// add atleast one book under the created category
 	// therefore, call addBook
 	// @output : null
@@ -30,14 +30,14 @@ exports.createCategory = function(req, res){
 
 exports.deleteCategory = function(req, res){
 	// delete all books associated to the particular category
-	// method = GET? 
+	// method = DELETE
 	// @input : 'category name'
 	// @output : null
 }
 
 exports.addBook = function(req, res){
 	// add a book record
-	// method = POST?
+	// method = POST
 	// @input : 'book parameters'
 	// book parameters includes (name, author), category name, price, number of copies
 	// @output : null
@@ -45,28 +45,35 @@ exports.addBook = function(req, res){
 
 exports.deleteBook = function(req, res){
 	// delete a specific book, identified by (name, author)
-	// method = DELETE?
+	// method = DELETE
 	// @input : 'book.name, book.author'
 	// @output : null
 }
 
 exports.findPrice = function(req, res){
 	// find the price of a book identified by (name, author)
-	// method = GET?
+	// method = GET
 	// @input : 'book.name, book.author'
 	// @output : book.price
 }
 
 exports.updatePrice = function(req, res){
 	// update an attribute of the book record identified by (name, author)
-	// method = UPDATE?
+	// method = UPDATE
 	// @input : 'book.name, book.author, book.attribute, newvalue'
 	// @output : null
 }
 
 exports.cleanOutOfStocks = function(req, res){
 	// clear all records with book.number_of_copies=0	
-	// method = none?
+	// method = DELETE
 	// @input : null
+	// @output : null
+}
+
+exports.viewBooks = function(req, res){
+	// displays 10 books at a time
+	// method = GET
+	// @input : 'category name'
 	// @output : null
 }
