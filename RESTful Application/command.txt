@@ -1,2 +1,2 @@
-mongoimport -d bookdb -c books --type csv  --file "/home/6th Sem/Cloud Computing/Assignments/2/books.csv" --headerline;
+mongoimport -d bookkart -c books --type csv  --file "books.csv" --headerline;
 
