@@ -48,13 +48,6 @@ db.open(function(db_open_error, db){
 // add atleast one book under the created category. Therefore, call addBook
 // @output : null
 
-exports.check = function(req, res){
-	var p = req.params.some;
-	console.log("somthign more");
-	console.log(books);
-	res.send();
-}
-
 exports.createCategory = function(req, res){
 	if(books==null){
 		res.send({'status':'Error in connecting to database'});
@@ -63,6 +56,7 @@ exports.createCategory = function(req, res){
 	// get the category data from the body 
 	var category_name = req.params.category;
 	console.log("Creating a new category "+category_name);
+	res.send({'done':'done'});
 
 	// call addBook function handler html with category_name specified
 	// TO CODE
@@ -79,9 +73,10 @@ exports.deleteCategory = function(req, res){
 	}
 	// get the name of the book to be deleted from the url
 	var category_name = req.params.category;
+	console.log("Deleting books under category "+category_name);
 
 	//delete the category : delete all books that fall under this category from the database
-	books.remove({'name':book_name},{safe:true},function(err, result){
+	books.remove({'category':category_name},{safe:true},function(err, result){
 		if(err){
 			console.log("Failed to delete books unser the category " + category_name +" : "+err);
 			res.send({'status':'Error in deleting the category ' + category_name});
@@ -104,6 +99,8 @@ exports.addBook = function(req, res){
 	}
 	// get the data from body
 	var book_details = req.body;
+
+	console.log(book_details);
 
 	//insert the obtained json
 	books.insert(book_details,{safe:true},function(err, result){
@@ -129,8 +126,10 @@ exports.deleteBook = function(req, res){
 	//get the book name from the url
 	var book_name = req.params.book;
 
+	console.log("deleting book "+book_name);
+
 	//delete book with name = book_name from the database 
-	books.remove({'book':book_name},{safe:true},function(err, result){
+	books.remove({'book_name':book_name},{safe:true},function(err, result){
 		if(err){
 			console.log('Error in deleting book named ' + book_name);
 			res.send({'status':'Error in deleting book ' + book_name});
@@ -153,9 +152,11 @@ exports.findPrice = function(req, res){
 	// get the data from the url
 	var book_name = req.params.book;
 
+	console.log("finding price of the book "+book_name);
+
 	// get the price of the book and send it
-	books.findOne({'book':book_name},function(err, doc){
-		if(err){
+	books.findOne({'book_name':book_name},function(err, doc){
+		if(err || doc == null){
 			console.log('Error in finding the book');
 			res.send({'status':'Error in finding book'});
 		} else {
@@ -206,6 +207,8 @@ exports.cleanOutOfStocks = function(req, res){
 		return;
 	}
 	// no data required from the page
+
+	console.log("deleting out of stock books");
 
 	// delete all the books which are out of stock
 	books.remove({'number_of_copies':0}, {safe:true}, function(err, result){
