@@ -1,11 +1,14 @@
 var express = require('express');
-var object = require('./routes/operations.js');
+var object = require('./routes/operations');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // create category : POST
-app.post('/add_category/:category',object.createCategory);
+app.post('/add_category',object.createCategory);
 
 // delete category : DELETE
 app.delete('/delete_category/:category',object.deleteCategory);
@@ -29,7 +32,10 @@ app.delete('/clean',object.cleanOutOfStocks);
 app.get('/show/:category/:offset',object.viewBooks);
 
 // get all categories
-app.get('/get_category',object.getCategory);
+app.get('/get_categories',object.getCategory);
+
+//get all books
+app.get('/get_all_books',object.getAllBooks);
 
 // show the static index page
 app.get('/',function(req, res){
