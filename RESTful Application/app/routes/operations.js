@@ -97,7 +97,7 @@ exports.addBook = function(req, res){
 		return;
 	}
 	// get the data from body
-	var book_details = req.body;
+	var book_details = JSON.parse(req.body);
 
 	console.log("book details is : "+book_details);
 
@@ -177,7 +177,7 @@ exports.updatePrice = function(req, res){
 	}
 	// get the book_name from the url, and the updated data from the body
 	var book_name = req.params.book;
-	var updated_details = req.body;
+	var updated_details = JSON.parse(req.body);
 
 	console.log('Updating book named ' + book_name);
 	console.log('To record :' + JSON.stringify(updated_details));
@@ -253,3 +253,30 @@ exports.viewBooks = function(req, res){
 		}
 	});
 }
+
+//get the category from the database
+exports.getCategory = function(req, res){
+	if(books==null){
+		res.send([{'status':'Error in connecting to database'}]);
+		return;
+	}
+	console.log("Getting the category ");
+
+	// TO CODE should include limit and offset attributes
+	var requirements = {
+		"limit" : 10,
+		"skip" : offset
+	}
+
+	// get the retrived documents in the form of an array
+	books.distinct("category").toArray(function(err, doc){
+		if(err){
+			console.log('Error in retrieving data');
+			res.send([{'status':'Error in retrieving data'}]);
+		} else {
+			res.send(doc);
+		}
+	});
+}
+
+
