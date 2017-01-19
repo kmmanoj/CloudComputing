@@ -1,8 +1,8 @@
 function addCategory(){
-	cat = document.getElementById("CategoryName");
+	cat = document.getElementById("CreateCategory");
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange=updateCat;
-	xhr.open("POST","url",true);
+	xhr.open("POST","http://localhost:7766/add_category/"+cat.value,true);
 	// paste input as json object while sending
 	xhr.send('{"cat" : "' + cat.value+'"}');
 }
@@ -21,10 +21,10 @@ function updateCat(str){
 }
 
 function removeCategory(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("RemoveCategory");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=updateRemoveCat;
-	xhr.open("POST","url",true);
+	xhr.open("DELETE","http://localhost:7766/delete_category/"+cat.value,true);
 	//paste input as json object while sending
 	xhr.send('{"cat" : "'+cat.value+'"}');
 }
@@ -43,10 +43,10 @@ function updateRemoveCat(str){
 }
 //get the price from the server 
 function getPrice(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("GetPrice");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=priceUpdate;
-	xhr.open("GET","url",true);
+	xhr.open("GET","http://localhost:7766/find_price/"+cat.value,true);
 	//paste input as json object while sending
 	xhr.send();
 }
@@ -65,10 +65,10 @@ function priceUpdate(str){
 }
 // delete the book
 function deleteBook(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("RemoveBook");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=bookDeleteUpdate;
-	xhr.open("DELETE","url",true);
+	xhr.open("DELETE","http://localhost:7766/delete_book/"+cat.value,true);
 	//paste input as json object while sending
 	xhr.send();
 }
@@ -88,10 +88,10 @@ function bookDeleteUpdate(str){
 	
 // add a new book
 function addBook(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("AddBook");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange = updateAddBook;
-	xhr.open("POST","url",true);
+	xhr.open("POST","http://localhost:7766/add_book",true);
 	xhr.open("send the value as key pair / JSON object");
 	//paste input as json object while sending
 	xhr.send();
@@ -112,10 +112,10 @@ function updateAddBook(str){
 	
 //update the price
 function updatePrice(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("UpdatePrice");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=updateNewPrice;
-	xhr.open("PUT","url",true);
+	xhr.open("PUT","http://localhost:7766/update_price/"+cat.value,true);
 	//paste input as json object while sending
 	xhr.send();
 }
@@ -138,7 +138,7 @@ function getAllBook(){
 	cat = document.getElementById("id of");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange = updateAllBook;
-	xhr.open("GET","url",true);
+	xhr.open("GET","http://localhost:7766/show/"+cat.value,true);
 	//paste input as json object while sending
 	xhr.send();
 }
@@ -155,10 +155,10 @@ function updateAllBook(str){
 
 // delete the out of stock book
 function deleteOutBook(){
-	cat = document.getElementById("id of");
+	cat = document.getElementById("RemoveOutBook");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange = updateOutBook;
-	xhr.open("DELETE","url",true);
+	xhr.open("DELETE","http://localhost:7766/clean",true);
 	//paste input as json object while sending
 	xhr.send();
 }
