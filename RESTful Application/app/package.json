@@ -1,19 +1,21 @@
 {
-    "name": "bookkart",
-    "version": "1.0.0",
-    "description": "An REST based Web service that supports operations such as creating, inserting, updating, deleting and viewing books and its categories",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "github.com/AnaghHegde/CloudComputing"
-    },
-    "keywords": [
-        "REST-API"
-    ],
-    "author": "Ahmed Fouzan (ahmedfouzan@gmail.com), Anagh Hegde (h.v.anagh@gmail.com), Ganesh Bhargav C H (ganeshbhargavch@gmail.com), Manoj Vignesh K M (kmmanoj1990@gmail.com)",
-    "license":"MIT",
-    "dependencies":{
-        "express":"^4.14.0",
-        "mongodb":"2.2.21"
-    }
+  "name": "bookkart",
+  "version": "1.0.0",
+  "description": "An REST based Web service that supports operations such as creating, inserting, updating, deleting and viewing books and its categories",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "github.com/AnaghHegde/CloudComputing"
+  },
+  "keywords": [
+    "REST-API"
+  ],
+  "author": "Ahmed Fouzan (ahmedfouzan@gmail.com), Anagh Hegde (h.v.anagh@gmail.com), Ganesh Bhargav C H (ganeshbhargavch@gmail.com), Manoj Vignesh K M (kmmanoj1990@gmail.com)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "bootstrap": "3.3.7",
+    "express": "^4.14.0",
+    "mongodb": "2.2.21"
+  }
 }
