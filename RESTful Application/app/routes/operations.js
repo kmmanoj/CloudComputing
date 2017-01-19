@@ -47,7 +47,6 @@ db.open(function(db_open_error, db){
 // @method = POST
 // add atleast one book under the created category. Therefore, call addBook
 // @output : null
-
 exports.createCategory = function(req, res){
 	if(books==null){
 		res.send({'status':'Error in connecting to database'});
@@ -100,7 +99,7 @@ exports.addBook = function(req, res){
 	// get the data from body
 	var book_details = req.body;
 
-	console.log(book_details);
+	console.log("book details is : "+book_details);
 
 	//insert the obtained json
 	books.insert(book_details,{safe:true},function(err, result){
