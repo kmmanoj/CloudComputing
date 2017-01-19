@@ -1,6 +1,8 @@
 var express = require('express');
 var object = require('./routes/operations.js');
 var app = express();
+var path = require('path');
+
 
 // create category : POST
 app.post('/add_category/:category',object.createCategory);
@@ -26,19 +28,69 @@ app.delete('/clean',object.cleanOutOfStocks);
 // view books : GET
 app.get('/show/:category/:offset',object.viewBooks);
 
-var path = require('path');
+// show the static index page
+app.get('/',function(req, res){
+	res.sendFile(path.join(__dirname+'/index.html'));
+});
 
+// some supporting files : such as manual css, jquery, and script files
 app.get('*/node_modules/bootstrap/dist/css/bootstrap.css',function(req, res){
-	// the url callback for the bootstrap code
 	res.sendFile(path.join(__dirname+'/node_modules/bootstrap/dist/css/bootstrap.css'));
 });
 
 app.get('*/node_modules/bootstrap/dist/js/bootstrap.js', function(req, res){
-	// the url callback for the jquery code
 	res.sendFile(path.join(__dirname+'/node_modules/bootstrap/dist/js/bootstrap.js'));
 });
 
-// other urls : display page not found
+app.get('/dist/css/bootstrap.min.css',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/css/bootstrap.min.css'));
+});
+
+app.get('/dist/css/bootstrap-select.css.map',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/css/bootstrap-select.css.map'));
+});
+
+app.get('/dist/css/style.css',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/css/style.css'));
+});
+
+app.get('/dist/css/bootstrap-select.css',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/css/bootstrap-select.css'));
+});
+
+app.get('/dist/css/bootstrap-select.min.css',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/css/bootstrap-select.min.css'));
+});
+
+app.get('/dist/js/bootstrap.min.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/bootstrap.min.js'));
+});
+
+app.get('/dist/js/bootstrap-select.js.map',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/bootstrap-select.js.map'));
+});
+
+app.get('/dist/js/tether.min.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/tether.min.js'));
+});
+
+app.get('/dist/js/bootstrap-select.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/bootstrap-select.js'));
+});
+
+app.get('/dist/js/jquery.min.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/jquery.min.js'));
+});
+
+app.get('/dist/js/functs.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/functs.js'));
+});
+
+app.get('dist/js/bootstrap-select.min.js',function(req, res){
+	res.sendFile(path.join(__dirname+'/dist/js/bootstrap-select.min.js'));
+});
+
+// other urls : display page not found webpage
 app.get('*',function(req, res){
 	// display a static ' 404 Page not found '  html page
 	res.sendFile(path.join(__dirname+'/pnf404.html'));
