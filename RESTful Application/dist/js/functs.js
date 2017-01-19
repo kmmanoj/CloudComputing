@@ -1,6 +1,6 @@
 xhr = new XMLHttpRequest();
 function addCategory(){
-	var category = document.getElementById("CategoryName");
+	var category = document.getElementById("addCategoryInput");
 	xhr.onreadystatechange = updateCat;
 	xhr.open("POST","http://localhost:7766/add_category/"+category.value,true);
 	console.log("http://localhost:7766/add_category/"+category.value);
@@ -23,7 +23,7 @@ function updateCat(){
 }
 
 function removeCategory(){
-	category = document.getElementById("RemoveCategory");
+	category = document.getElementById("removeCategoryInput");
 	xhr.onreadystatechange=updateRemoveCat;
 	xhr.open("DELETE","http://localhost:7766/delete_category/"+category.value,true);
 	//paste input as json object while sending
@@ -46,7 +46,7 @@ function updateRemoveCat(){
 
 //get the price from the server 
 function getPrice(){
-	cat = document.getElementById("GetPrice");
+	cat = document.getElementById("getPriceInput");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=priceUpdate;
 	xhr.open("GET","http://localhost:7766/find_price/"+cat.value,true);
@@ -54,8 +54,7 @@ function getPrice(){
 	xhr.send();
 }
 
-function priceUpdate(str){
-	var obj=JSON.parse(str);
+function priceUpdate(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f4bf").removeClass("in").show();
@@ -64,12 +63,14 @@ function priceUpdate(str){
 			$("#f4bs").removeClass("in").show();
 			$("#f4bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
 
 // delete the book
 function deleteBook(){
-	cat = document.getElementById("RemoveBook");
+	cat = document.getElementById("deletBookInput");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=bookDeleteUpdate;
 	xhr.open("DELETE","http://localhost:7766/delete_book/"+cat.value,true);
@@ -78,7 +79,6 @@ function deleteBook(){
 }
 
 function bookDeleteUpdate(str){
-	var obj=JSON.parse(str);
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f5bf").removeClass("in").show();
@@ -87,12 +87,14 @@ function bookDeleteUpdate(str){
 			$("#f5bs").removeClass("in").show();
 			$("#f5bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
 	
 // add a new book
 function addBook(){
-	cat = document.getElementById("AddBook");
+	cat = document.getElementById("addBookInput");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange = updateAddBook;
 	xhr.open("POST","http://localhost:7766/add_book",true);
@@ -101,8 +103,7 @@ function addBook(){
 	xhr.send();
 }
 
-function updateAddBook(str){
-	var obj=JSON.parse(str);
+function updateAddBook(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f3bf").removeClass("in").show();
@@ -111,12 +112,14 @@ function updateAddBook(str){
 			$("#f3bs").removeClass("in").show();
 			$("#f3bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
 	
 //update the price
 function updatePrice(){
-	cat = document.getElementById("UpdatePrice");
+	cat = document.getElementById("updatePriceInput");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange=updateNewPrice;
 	xhr.open("PUT","http://localhost:7766/update_price/"+cat.value,true);
@@ -124,8 +127,7 @@ function updatePrice(){
 	xhr.send();
 }
 
-function updateNewPrice(str){
-	var obj=JSON.parse(str);
+function updateNewPrice(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f7bf").removeClass("in").show();
@@ -134,10 +136,13 @@ function updateNewPrice(str){
 			$("#f7bs").removeClass("in").show();
 			$("#f7bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);	
 	}
 }
 
-// list of all books	
+// list of all books
+/*
 function getAllBook(){
 	cat = document.getElementById("id of");
 	xhr = new xmlhttpRequest();
@@ -147,19 +152,21 @@ function getAllBook(){
 	xhr.send();
 }
 
-function updateAllBook(str){
+function updateAllBook(){
 	if(xhr.readyState == 4 && xhr.status == 200){
 		var obj = JSON.parse(str);
 		ele = document.createElement("div");
 		//update the vale as json element
 		ele.innerHTML = obj;
 		document.appendChild(ele);
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
-}
+}*/
 
 // delete the out of stock book
 function deleteOutBook(){
-	cat = document.getElementById("RemoveOutBook");
+	cat = document.getElementById("deleteOutBookInput");
 	xhr = new xmlhttpRequest();
 	xhr.onreadystatechange = updateOutBook;
 	xhr.open("DELETE","http://localhost:7766/clean",true);
@@ -167,8 +174,7 @@ function deleteOutBook(){
 	xhr.send();
 }
 
-function updateOutBook(str){
-	var obj=JSON.parse(str);
+function updateOutBook(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f6bf").removeClass("in").show();
@@ -177,5 +183,7 @@ function updateOutBook(str){
 			$("#f6bs").removeClass("in").show();
 			$("#f6bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
