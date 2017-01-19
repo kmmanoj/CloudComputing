@@ -28,6 +28,8 @@ app.delete('/clean',object.cleanOutOfStocks);
 // view books : GET
 app.get('/show/:category/:offset',object.viewBooks);
 
+// get all categories
+app.get('/get_category',object.getCategory);
 // show the static index page
 app.get('/',function(req, res){
 	res.sendFile(path.join(__dirname+'/index.html'));
