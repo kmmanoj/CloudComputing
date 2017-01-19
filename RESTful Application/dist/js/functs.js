@@ -1,14 +1,14 @@
+xhr = new XMLHttpRequest();
 function addCategory(){
-	cat = document.getElementById("CreateCategory");
-	xhr = new XMLHttpRequest();
-	xhr.onreadystatechange=updateCat;
-	xhr.open("POST","http://localhost:7766/add_category/"+cat.value,true);
+	var category = document.getElementById("CategoryName");
+	xhr.onreadystatechange = updateCat;
+	xhr.open("POST","http://localhost:7766/add_category/"+category.value,true);
+	console.log("http://localhost:7766/add_category/"+category.value);
 	// paste input as json object while sending
-	xhr.send('{"cat" : "' + cat.value+'"}');
+	xhr.send('{"category" : "' + category.value+'"}');
 }
 
-function updateCat(str){
-	var obj=JSON.parse(str);
+function updateCat(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f1bf").removeClass("in").show();
@@ -17,20 +17,20 @@ function updateCat(str){
 			$("#f1bs").removeClass("in").show();
 			$("#f1bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		var obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
 
 function removeCategory(){
-	cat = document.getElementById("RemoveCategory");
-	xhr = new xmlhttpRequest();
+	category = document.getElementById("RemoveCategory");
 	xhr.onreadystatechange=updateRemoveCat;
-	xhr.open("DELETE","http://localhost:7766/delete_category/"+cat.value,true);
+	xhr.open("DELETE","http://localhost:7766/delete_category/"+category.value,true);
 	//paste input as json object while sending
-	xhr.send('{"cat" : "'+cat.value+'"}');
+	xhr.send('{"category" : "'+category.value+'"}');
 }
 
-function updateRemoveCat(str){
-	var obj=JSON.parse(str);
+function updateRemoveCat(){
 	if(xhr.readyState==4 && xhr.status==200){
 		if(xhr.readyState == 4){
 			$("#f2bf").removeClass("in").show();
@@ -39,8 +39,11 @@ function updateRemoveCat(str){
 			$("#f2bs").removeClass("in").show();
 			$("#f2bs").delay(200).addClass("in").fadeOut(2000);
 		}
+		obj = JSON.parse(xhr.responseText);
+		console.log(obj);
 	}
 }
+
 //get the price from the server 
 function getPrice(){
 	cat = document.getElementById("GetPrice");
@@ -63,6 +66,7 @@ function priceUpdate(str){
 		}
 	}
 }
+
 // delete the book
 function deleteBook(){
 	cat = document.getElementById("RemoveBook");
