@@ -4,7 +4,6 @@
 var mongo = require('mongodb');
 var Server = mongo.Server,
 	Db = mongo.Db;
-	// bson = mongo.BSONPure;
 
 var dbserver = new Server('localhost', 27017, {auto_reconnect: true});
 // create an instance of the bookkart database for use
@@ -48,17 +47,46 @@ db.open(function(db_open_error, db){
 // add atleast one book under the created category. Therefore, call addBook
 // @output : null
 exports.createCategory = function(req, res){
+	console.log(req.body);
 	if(books==null){
 		res.send({'status':'Error in connecting to database'});
 		return;
 	}
 	// get the category data from the body 
-	var category_name = req.params.category;
-	console.log("Creating a new category "+category_name);
-	res.send({'done':'done'});
+	var category_name = req.body
+	outcome=JSON.stringify(category_name);
+	console.log("Creating a new category "+outcome);
 
-	// call addBook function handler html with category_name specified
-	// TO CODE
+	//insert the obtained json
+	books.insert(category_name,{safe:true},function(err, result){
+		if(err){
+			console.log('Error in adding book');
+			res.send({'status':'Error in adding book'});
+		} else {
+			console.log('Successfully inserted !!' + outcome + ' book(s) inserted ');
+			res.send({'status':'Success'});
+		}
+	});
+}
+
+//get the category from the database
+exports.getCategory = function(req, res){
+	if(books==null){
+		res.send([{'status':'Error in connecting to database'}]);
+		return;
+	}
+	console.log("Getting the categories");
+
+	// get the retrived documents in the form of an array
+	// books.distinct("category").toArray(function(err, doc){
+	books.distinct("category",function(err, doc){
+		if(err){
+			console.log('Error in retrieving data');
+			res.send([{'status':'Error in retrieving data'}]);
+		} else {
+			res.send(doc);
+		}
+	});
 }
 
 // delete all books associated to the particular category
@@ -97,8 +125,8 @@ exports.addBook = function(req, res){
 		return;
 	}
 	// get the data from body
-	var book_details = JSON.parse(req.body);
-
+	var book_details = req.body;
+	console.log(book_details);
 	console.log("book details is : "+book_details);
 
 	//insert the obtained json
@@ -160,7 +188,8 @@ exports.findPrice = function(req, res){
 			res.send({'status':'Error in finding book'});
 		} else {
 			console.log('Successfully found !!');
-			res.send({'price':doc.price, 'status':'Success'});
+			doc.status="Success";
+			res.send(doc);
 		}
 	});
 }
@@ -177,13 +206,13 @@ exports.updatePrice = function(req, res){
 	}
 	// get the book_name from the url, and the updated data from the body
 	var book_name = req.params.book;
-	var updated_details = JSON.parse(req.body);
+	var updated_details = req.body;
 
 	console.log('Updating book named ' + book_name);
 	console.log('To record :' + JSON.stringify(updated_details));
 
 	//update the book identified by the name
-	books.update({'book_name':book_name}, updated_details, {safe:true}, function(err, result) {
+	books.update({'book_name':book_name}, { $set : updated_details }, {safe:true}, function(err, result) {
 		if (err) {
 			// if error occurred, then send fail in the response message
 			console.log('Error updating book: '+book_name + ' : ' + err);
@@ -227,7 +256,7 @@ exports.cleanOutOfStocks = function(req, res){
 // @output : array of json documents
 exports.viewBooks = function(req, res){
 	if(books==null){
-		res.send([{'status':'Error in connecting to database'}]);
+		res.send({'status':'Error in connecting to database'});
 		return; 
 	}
 	// get category name from the url
@@ -235,7 +264,7 @@ exports.viewBooks = function(req, res){
 	// get the offset from which data has to be retrieved 
 	var offset=req.params.offset;
 
-	console.log("Category : "+category_name+" offset : "+offset+" . ");
+	console.log("Category : "+category_name+" offset : "+offset+".");
 
 	// TO CODE should include limit and offset attributes
 	var requirements = {
@@ -247,36 +276,28 @@ exports.viewBooks = function(req, res){
 	books.find({'category':category_name},requirements).toArray(function(err, doc){
 		if(err){
 			console.log('Error in retrieving data');
-			res.send([{'status':'Error in retrieving data'}]);
+			res.send([]);
 		} else {
+			console.log("sending data");
 			res.send(doc);
 		}
 	});
 }
 
-//get the category from the database
-exports.getCategory = function(req, res){
+exports.getAllBooks = function(req ,res){
 	if(books==null){
 		res.send([{'status':'Error in connecting to database'}]);
-		return;
+		return; 
 	}
-	console.log("Getting the category ");
-
-	// TO CODE should include limit and offset attributes
-	var requirements = {
-		"limit" : 10,
-		"skip" : offset
-	}
+	console.log("Getting all books");
 
 	// get the retrived documents in the form of an array
-	books.distinct("category").toArray(function(err, doc){
+	books.find().toArray(function(err, doc){
 		if(err){
 			console.log('Error in retrieving data');
-			res.send([{'status':'Error in retrieving data'}]);
+			res.send([{'status':'Failed to get data'}]);
 		} else {
 			res.send(doc);
 		}
 	});
 }
-
-
