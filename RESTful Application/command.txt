@@ -1,2 +1,0 @@
-mongoimport -d bookkart -c books --type csv  --file "books.csv" --headerline;
-
